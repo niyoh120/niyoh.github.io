@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>niyoh的博客</title><link href="https://niyoh120.github.io/" rel="alternate"></link><link href="https://niyoh120.github.io/feeds/all.atom.xml" rel="self"></link><id>https://niyoh120.github.io/</id><updated>2018-03-25T22:00:11+08:00</updated><entry><title>[golang]学习笔记</title><link href="https://niyoh120.github.io/golangxue-xi-bi-ji.html" rel="alternate"></link><published>2018-03-25T22:00:11+08:00</published><updated>2018-03-25T22:00:11+08:00</updated><author><name>niyoh</name></author><id>tag:niyoh120.github.io,2018-03-25:/golangxue-xi-bi-ji.html</id><summary type="html">&lt;h1&gt;Golang 学习笔记&lt;/h1&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>niyoh的博客 - golang</title><link href="https://niyoh120.github.io/" rel="alternate"></link><link href="https://niyoh120.github.io/feeds/golang.atom.xml" rel="self"></link><id>https://niyoh120.github.io/</id><updated>2018-03-25T22:00:11+08:00</updated><entry><title>[golang]学习笔记</title><link href="https://niyoh120.github.io/golangxue-xi-bi-ji.html" rel="alternate"></link><published>2018-03-25T22:00:11+08:00</published><updated>2018-03-25T22:00:11+08:00</updated><author><name>niyoh</name></author><id>tag:niyoh120.github.io,2018-03-25:/golangxue-xi-bi-ji.html</id><summary type="html">&lt;h1&gt;Golang 学习笔记&lt;/h1&gt;
 &lt;h2&gt;Type&lt;/h2&gt;
 &lt;h3&gt;Struct&lt;/h3&gt;
 &lt;p&gt;A field declared with a type but no explicit field name is called an embedded field. An embedded field must be specified as a type name T or as a pointer to a non-interface type name *T, and T itself may not be a pointer type …&lt;/p&gt;</summary><content type="html">&lt;h1&gt;Golang 学习笔记&lt;/h1&gt;
@@ -192,90 +192,7 @@ If you omit the loop condition it loops forever.&lt;/p&gt;
 The default case in a select is run if no other case is ready.&lt;/p&gt;
 &lt;p&gt;Use a default case to try a send or receive without blocking:&lt;/p&gt;
 &lt;h2&gt;Module&lt;/h2&gt;
-&lt;p&gt;function init is called before main.&lt;/p&gt;</content></entry><entry><title>hello</title><link href="https://niyoh120.github.io/hello.html" rel="alternate"></link><published>2018-03-11T16:08:26+08:00</published><updated>2018-03-11T16:08:26+08:00</updated><author><name>niyoh</name></author><id>tag:niyoh120.github.io,2018-03-11:/hello.html</id><summary type="html">&lt;h1&gt;hello world&lt;/h1&gt;</summary><content type="html">&lt;h1&gt;hello world&lt;/h1&gt;</content></entry><entry><title>排序算法总结</title><link href="https://niyoh120.github.io/pai-xu-suan-fa-zong-jie.html" rel="alternate"></link><published>2018-03-11T13:50:26+08:00</published><updated>2018-03-11T13:50:26+08:00</updated><author><name>niyoh</name></author><id>tag:niyoh120.github.io,2018-03-11:/pai-xu-suan-fa-zong-jie.html</id><summary type="html">&lt;h1&gt;排序算法总结&lt;/h1&gt;
-&lt;h3&gt;冒泡排序&lt;/h3&gt;
-&lt;h4&gt;伪代码&lt;/h4&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="kd"&gt;function&lt;/span&gt; &lt;span class="nx"&gt;bubble_sort&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;array&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="nx"&gt;length&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-    &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="nx"&gt;i&lt;/span&gt; &lt;span class="nx"&gt;from&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt; &lt;span class="nx"&gt;to&lt;/span&gt; &lt;span class="nx"&gt;length&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;
-        &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="nx"&gt;j&lt;/span&gt; &lt;span class="nx"&gt;from&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt; &lt;span class="nx"&gt;to&lt;/span&gt; &lt;span class="nx"&gt;length&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="nx"&gt;i&lt;/span&gt;
-            &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="nx"&gt;array&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="nx"&gt;j&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="nx"&gt;array&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="nx"&gt;j&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
-                &lt;span class="nx"&gt;swap&lt;/span&gt; &lt;span class="nx"&gt;array&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="nx"&gt;j&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="nx"&gt;and&lt;/span&gt; &lt;span class="nx"&gt;array&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="nx"&gt;j&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;h3&gt;选择排序&lt;/h3&gt;
-&lt;h4&gt;伪代码&lt;/h4&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="kd"&gt;function&lt;/span&gt; &lt;span class="nx"&gt;select_sort&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;array&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="nx"&gt;length&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-    &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="nx"&gt;i&lt;/span&gt; &lt;span class="nx"&gt;from&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt; &lt;span class="nx"&gt;to&lt;/span&gt; &lt;span class="nx"&gt;length&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;
-        &lt;span class="nx"&gt;currentmini&lt;/span&gt; &lt;span class="nx"&gt;is …&lt;/span&gt;&lt;/pre&gt;&lt;/div&gt;</summary><content type="html">&lt;h1&gt;排序算法总结&lt;/h1&gt;
-&lt;h3&gt;冒泡排序&lt;/h3&gt;
-&lt;h4&gt;伪代码&lt;/h4&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="kd"&gt;function&lt;/span&gt; &lt;span class="nx"&gt;bubble_sort&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;array&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="nx"&gt;length&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-    &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="nx"&gt;i&lt;/span&gt; &lt;span class="nx"&gt;from&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt; &lt;span class="nx"&gt;to&lt;/span&gt; &lt;span class="nx"&gt;length&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;
-        &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="nx"&gt;j&lt;/span&gt; &lt;span class="nx"&gt;from&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt; &lt;span class="nx"&gt;to&lt;/span&gt; &lt;span class="nx"&gt;length&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="nx"&gt;i&lt;/span&gt;
-            &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="nx"&gt;array&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="nx"&gt;j&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="nx"&gt;array&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="nx"&gt;j&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
-                &lt;span class="nx"&gt;swap&lt;/span&gt; &lt;span class="nx"&gt;array&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="nx"&gt;j&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="nx"&gt;and&lt;/span&gt; &lt;span class="nx"&gt;array&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="nx"&gt;j&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;h3&gt;选择排序&lt;/h3&gt;
-&lt;h4&gt;伪代码&lt;/h4&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="kd"&gt;function&lt;/span&gt; &lt;span class="nx"&gt;select_sort&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;array&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="nx"&gt;length&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-    &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="nx"&gt;i&lt;/span&gt; &lt;span class="nx"&gt;from&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt; &lt;span class="nx"&gt;to&lt;/span&gt; &lt;span class="nx"&gt;length&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;
-        &lt;span class="nx"&gt;currentmini&lt;/span&gt; &lt;span class="nx"&gt;is&lt;/span&gt; &lt;span class="nx"&gt;array&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="nx"&gt;i&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
-        &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="nx"&gt;j&lt;/span&gt; &lt;span class="nx"&gt;from&lt;/span&gt; &lt;span class="nx"&gt;i&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt; &lt;span class="nx"&gt;to&lt;/span&gt; &lt;span class="nx"&gt;length&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;
-            &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="nx"&gt;array&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="nx"&gt;j&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&lt;/span&gt; &lt;span class="nx"&gt;currentmini&lt;/span&gt;
-                &lt;span class="nx"&gt;currentmini&lt;/span&gt; &lt;span class="nx"&gt;is&lt;/span&gt; &lt;span class="nx"&gt;array&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="nx"&gt;j&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
-        &lt;span class="nx"&gt;swap&lt;/span&gt; &lt;span class="nx"&gt;array&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="nx"&gt;i&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="nx"&gt;and&lt;/span&gt; &lt;span class="nx"&gt;currentmini&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;h3&gt;插入排序&lt;/h3&gt;
-&lt;p&gt;类似抓扑克牌&lt;/p&gt;
-&lt;h4&gt;伪代码&lt;/h4&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="kd"&gt;function&lt;/span&gt; &lt;span class="nx"&gt;insert_sort&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;array&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-    &lt;span class="nx"&gt;array&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="nx"&gt;is&lt;/span&gt; &lt;span class="nx"&gt;sorted&lt;/span&gt;
-    &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="nx"&gt;each&lt;/span&gt; &lt;span class="nx"&gt;unsorted&lt;/span&gt; &lt;span class="nx"&gt;element&lt;/span&gt; &lt;span class="nx"&gt;x&lt;/span&gt;
-        &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="nx"&gt;j&lt;/span&gt; &lt;span class="nx"&gt;from&lt;/span&gt; &lt;span class="nx"&gt;last_sorted_index&lt;/span&gt; &lt;span class="nx"&gt;to&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;
-            &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="nx"&gt;array&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="nx"&gt;j&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&lt;/span&gt; &lt;span class="nx"&gt;x&lt;/span&gt;
-                &lt;span class="nx"&gt;move&lt;/span&gt; &lt;span class="nx"&gt;element&lt;/span&gt; &lt;span class="nx"&gt;j&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt; &lt;span class="nx"&gt;to&lt;/span&gt; &lt;span class="nx"&gt;last_sorted_index&lt;/span&gt; &lt;span class="nx"&gt;right&lt;/span&gt; &lt;span class="nx"&gt;by&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;
-                &lt;span class="nx"&gt;insert&lt;/span&gt; &lt;span class="nx"&gt;x&lt;/span&gt; &lt;span class="k"&gt;in&lt;/span&gt; &lt;span class="nx"&gt;array&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="nx"&gt;j&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
-                &lt;span class="k"&gt;break&lt;/span&gt; &lt;span class="nx"&gt;loop&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;h3&gt;堆排序&lt;/h3&gt;
-&lt;p&gt;堆是一种特殊的二叉树,大堆表示父结点元素均大于子结点的堆,小堆相反&lt;/p&gt;
-&lt;p&gt;结点序号从0开始,则有如下性质:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;parent(i) = floor((i-1)/2)
-leftchild(i) = 2i+1
-rightchild(i) = 2(i+1)
-&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;h4&gt;伪代码&lt;/h4&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="kd"&gt;function&lt;/span&gt; &lt;span class="nx"&gt;heap_sort&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;array&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="nx"&gt;length&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-    &lt;span class="kd"&gt;function&lt;/span&gt; &lt;span class="nx"&gt;max_helpify&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;root&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="nx"&gt;end&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-        &lt;span class="nx"&gt;loop&lt;/span&gt;
-            &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="nx"&gt;max&lt;/span&gt; &lt;span class="nx"&gt;of&lt;/span&gt; &lt;span class="nx"&gt;child&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&lt;/span&gt; &lt;span class="nx"&gt;root&lt;/span&gt; &lt;span class="nx"&gt;or&lt;/span&gt; &lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="nx"&gt;end&lt;/span&gt;
-                &lt;span class="k"&gt;break&lt;/span&gt; &lt;span class="nx"&gt;loop&lt;/span&gt;
-            &lt;span class="nx"&gt;swap&lt;/span&gt; &lt;span class="nx"&gt;root&lt;/span&gt; &lt;span class="nx"&gt;and&lt;/span&gt; &lt;span class="nx"&gt;max&lt;/span&gt; &lt;span class="nx"&gt;of&lt;/span&gt; &lt;span class="nx"&gt;child&lt;/span&gt;
-            &lt;span class="nx"&gt;index&lt;/span&gt; &lt;span class="nx"&gt;of&lt;/span&gt; &lt;span class="nx"&gt;root&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nx"&gt;index&lt;/span&gt; &lt;span class="nx"&gt;of&lt;/span&gt; &lt;span class="nx"&gt;max&lt;/span&gt; &lt;span class="nx"&gt;of&lt;/span&gt; &lt;span class="nx"&gt;child&lt;/span&gt;
-
-    &lt;span class="err"&gt;#&lt;/span&gt; &lt;span class="nx"&gt;build&lt;/span&gt; &lt;span class="nx"&gt;max&lt;/span&gt; &lt;span class="nx"&gt;heap&lt;/span&gt;
-    &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="nx"&gt;node&lt;/span&gt; &lt;span class="nx"&gt;from&lt;/span&gt; &lt;span class="nx"&gt;last&lt;/span&gt; &lt;span class="nx"&gt;no&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="nx"&gt;leaf&lt;/span&gt; &lt;span class="nx"&gt;node&lt;/span&gt; &lt;span class="nx"&gt;to&lt;/span&gt; &lt;span class="nx"&gt;root&lt;/span&gt;
-        &lt;span class="nx"&gt;max_helpify&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;node&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="nx"&gt;length&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-
-    &lt;span class="err"&gt;#&lt;/span&gt; &lt;span class="nx"&gt;heap&lt;/span&gt; &lt;span class="nx"&gt;sort&lt;/span&gt;
-    &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="nx"&gt;node&lt;/span&gt; &lt;span class="nx"&gt;from&lt;/span&gt; &lt;span class="nx"&gt;last&lt;/span&gt; &lt;span class="nx"&gt;node&lt;/span&gt; &lt;span class="nx"&gt;to&lt;/span&gt; &lt;span class="nx"&gt;root&lt;/span&gt;
-        &lt;span class="nx"&gt;swap&lt;/span&gt; &lt;span class="nx"&gt;array&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="nx"&gt;and&lt;/span&gt; &lt;span class="nx"&gt;node&lt;/span&gt;
-        &lt;span class="nx"&gt;max_helpify&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;array&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt;&lt;span class="nx"&gt;index&lt;/span&gt; &lt;span class="nx"&gt;of&lt;/span&gt; &lt;span class="nx"&gt;node&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;h3&gt;快速排序&lt;/h3&gt;
-&lt;h4&gt;思想&lt;/h4&gt;
-&lt;p&gt;选择一个基准(pivot),将小于该基准的元素放在它左边,大于的放右边,然后以该元素为界将数组分为两部分,重复次过程直到数组长度小于1,则此时该数组已排序完毕&lt;/p&gt;</content></entry><entry><title>[golang]net库使用笔记</title><link href="https://niyoh120.github.io/golangnetku-shi-yong-bi-ji.html" rel="alternate"></link><published>2018-03-11T13:50:26+08:00</published><updated>2018-03-11T13:50:26+08:00</updated><author><name>niyoh</name></author><id>tag:niyoh120.github.io,2018-03-11:/golangnetku-shi-yong-bi-ji.html</id><summary type="html">&lt;h1&gt;net库使用笔记&lt;/h1&gt;
+&lt;p&gt;function init is called before main.&lt;/p&gt;</content></entry><entry><title>[golang]net库使用笔记</title><link href="https://niyoh120.github.io/golangnetku-shi-yong-bi-ji.html" rel="alternate"></link><published>2018-03-11T13:50:26+08:00</published><updated>2018-03-11T13:50:26+08:00</updated><author><name>niyoh</name></author><id>tag:niyoh120.github.io,2018-03-11:/golangnetku-shi-yong-bi-ji.html</id><summary type="html">&lt;h1&gt;net库使用笔记&lt;/h1&gt;
 &lt;p&gt;Conn类型的方法是线程安全的,即可以在多个goroutine中同时调用而无需加锁&lt;/p&gt;
 &lt;p&gt;&lt;code&gt;ParseIp&lt;/code&gt;方法返回的是16字节的byte数组,ipv4地址会被转换成对应的ipv6形式&lt;/p&gt;
 &lt;p&gt;setDe&lt;/p&gt;</summary><content type="html">&lt;h1&gt;net库使用笔记&lt;/h1&gt;

@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en-US">
+    <head>
+        <meta charset="utf-8"> 
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="author" content="niyoh" />
+        <meta name="copyright" content="niyoh" />
+
+<meta name="keywords" content=", golang, " />
+        <title>[golang]如何正确关闭一个channel  · niyoh的博客
+</title>
+        <link href="http://cdn-images.mailchimp.com/embedcode/slim-081711.css" rel="stylesheet" type="text/css">
+        <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-combined.min.css" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="https://niyoh120.github.io/theme/css/style.css" media="screen">
+        <link rel="stylesheet" type="text/css" href="https://niyoh120.github.io/theme/css/solarizedlight.css" media="screen">
+        <link rel="shortcut icon" href="https://niyoh120.github.io/theme/images/favicon.ico" type="image/x-icon" />
+        <link rel="apple-touch-icon" href="https://niyoh120.github.io/theme/images/apple-touch-icon.png" />
+        <link rel="apple-touch-icon" sizes="57x57" href="https://niyoh120.github.io/theme/images/apple-touch-icon-57x57.png" />
+        <link rel="apple-touch-icon" sizes="72x72" href="https://niyoh120.github.io/theme/images/apple-touch-icon-72x72.png" />
+        <link rel="apple-touch-icon" sizes="114x114" href="https://niyoh120.github.io/theme/images/apple-touch-icon-114x114.png" />
+        <link rel="apple-touch-icon" sizes="144x144" href="https://niyoh120.github.io/theme/images/apple-touch-icon-144x144.png" />
+        <link rel="icon" href="https://niyoh120.github.io/theme/images/apple-touch-icon-144x144.png" />
+        <link href="https://niyoh120.github.io/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="niyoh的博客 - Full Atom Feed" />
+        <link href="https://niyoh120.github.io/feeds/alogrithm.atom.xml" type="application/atom+xml" rel="alternate" title="niyoh的博客 - alogrithm Category Atom Feed" />
+        <link href="https://niyoh120.github.io/feeds/golang.atom.xml" type="application/atom+xml" rel="alternate" title="niyoh的博客 - golang Category Atom Feed" />
+        <link href="https://niyoh120.github.io/feeds/test.atom.xml" type="application/atom+xml" rel="alternate" title="niyoh的博客 - test Category Atom Feed" />
+    </head>
+    <body>
+        <div id="content-sans-footer">
+        <div class="navbar navbar-static-top">
+            <div class="navbar-inner">
+                <div class="container">
+                    <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </a>
+                    <a class="brand" href="https://niyoh120.github.io/"><span class=site-name>niyoh的博客</span></a>
+                    <div class="nav-collapse collapse">
+                        <ul class="nav pull-right top-menu">
+                            <li ><a href="https://niyoh120.github.io">Home</a></li>
+                            <li ><a href="https://niyoh120.github.io/categories.html">Categories</a></li>
+                            <li ><a href="https://niyoh120.github.io/tags.html">Tags</a></li>
+                            <li ><a href="https://niyoh120.github.io/archives.html">Archives</a></li>
+                            <li><form class="navbar-search" action="https://niyoh120.github.io/search.html" onsubmit="return validateForm(this.elements['q'].value);"> <input type="text" class="search-query" placeholder="Search" name="q" id="tipue_search_input"></form></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container-fluid">
+            <div class="row-fluid">
+                <div class="span1"></div>
+                <div class="span10">
+<article>
+<div class="row-fluid">
+    <header class="page_header span10 offset2">
+    <h1><a href="https://niyoh120.github.io/golangru-he-zheng-que-guan-bi-yi-ge-channel.html"> [golang]如何正确关闭一个channel  </a></h1>
+    </header>
+</div>
+
+<div class="row-fluid">
+        <div class="span8 offset2 article-content">
+
+            <h1>如何优雅地关闭channel</h1>
+<p><em>close一个channel的原则</em></p>
+<ul>
+<li>永远只在发送端close一个channel，也就是不要在接收端close一个channel</li>
+<li>不要直接close一个有多个发送者的channel，除非能确定负责关闭的是最后一个还在活动的发送者</li>
+</ul>
+<p>如果需要处理上面的情况，可以考虑使用<code>sync.once</code>或者<code>sync.mutex</code>设置一个指示channel已关闭的变量，或者添加一个<code>safeSend</code> 函数，代码如下</p>
+<div class="highlight"><pre><span></span><span class="kd">func</span> <span class="nx">safeSend</span><span class="p">(</span><span class="nx">ch</span> <span class="kd">chan</span><span class="o">&lt;-</span> <span class="nx">T</span><span class="p">,</span> <span class="nx">value</span> <span class="nx">T</span><span class="p">)</span> <span class="p">(</span><span class="nx">closed</span> <span class="kt">bool</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">defer</span> <span class="kd">func</span><span class="p">()</span> <span class="p">{</span>
+        <span class="c1">// 如果channel已经close，发送会导致panic，内置函数recover不会返回nil</span>
+        <span class="k">if</span> <span class="nb">recover</span><span class="p">()</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+            <span class="nx">closed</span> <span class="p">=</span> <span class="kc">true</span>
+        <span class="p">}</span>
+    <span class="p">}()</span>
+    <span class="nx">ch</span> <span class="o">&lt;-</span> <span class="nx">value</span>
+    <span class="nx">closed</span> <span class="p">=</span> <span class="kc">false</span>
+    <span class="k">return</span>
+<span class="p">}</span>
+</pre></div>
+
+
+<p>这种方式的缺点是不能使用内置的<code>select</code>的语句</p>
+<p>有两种更优雅的解决方式</p>
+<ol>
+<li>需要从1个接收端关闭channel的情况</li>
+</ol>
+<p>设置1个用来发送信号的channel，用来通知所有发送端不要再发送数据给channel了</p>
+<p>```go
+   package main</p>
+<p>import (
+    "log"
+    "math/rand"
+    "sync"
+    "time"
+   )</p>
+<p>func main() {
+    const maxRandomNum = 10000
+    const sendersNum = 100
+    done := make(chan struct{})
+    dataCh := make(chan int, 100)</p>
+<div class="highlight"><pre><span></span>log.SetFlags<span class="p">(</span><span class="m">0</span><span class="p">)</span>
+rand.Seed<span class="p">(</span>time.Now<span class="p">()</span><span class="m">.</span>UnixNano<span class="p">())</span>
+
+wgSenders <span class="o">:=</span> sync.WaitGroup<span class="p">{}</span>
+
+<span class="kr">for</span> i <span class="o">:=</span> <span class="m">0</span><span class="p">;</span> i <span class="o">&lt;</span> sendersNum<span class="p">;</span> i<span class="o">++</span> <span class="p">{</span>
+    wgSenders.Add<span class="p">(</span><span class="m">1</span><span class="p">)</span>
+    go func<span class="p">()</span> <span class="p">{</span>
+        defer wgSenders.Done<span class="p">()</span>
+        <span class="kr">for</span> <span class="p">{</span>
+            select <span class="p">{</span>
+            case <span class="o">&lt;-</span>done<span class="o">:</span>
+                <span class="kr">return</span>
+            case dataCh <span class="o">&lt;-</span> rand.Intn<span class="p">(</span>maxRandomNum<span class="p">)</span><span class="o">:</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">}()</span>
+<span class="p">}</span>
+<span class="kr">for</span> v <span class="o">:=</span> range dataCh <span class="p">{</span>
+    log.Println<span class="p">(</span>v<span class="p">)</span>
+    <span class="kr">if</span> v <span class="o">==</span> maxRandomNum<span class="m">-1</span> <span class="p">{</span>
+        <span class="kp">close</span><span class="p">(</span>done<span class="p">)</span>
+        <span class="kr">break</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+wgSenders.Wait<span class="p">()</span>
+log.Println<span class="p">(</span><span class="s">&quot;done&quot;</span><span class="p">)</span>
+<span class="kp">close</span><span class="p">(</span>dataCh<span class="p">)</span>
+</pre></div>
+
+
+<p>}
+   ```</p>
+<ol>
+<li>需要从多个接收端或发送端关闭channel的情况
+  设置一个仲裁者，当需要关闭channel时，通知仲裁者关闭channel</li>
+</ol>
+<p>```go
+  package main</p>
+<p>import (
+    "log"
+    "math/rand"
+    "sync"
+    "time"
+  )</p>
+<p>func main() {
+    const maxRandomNum = 10000
+    const sendersNum = 100
+    const receiversNum = 10
+    done := make(chan struct{})
+    toDone := make(chan struct{})
+    dataCh := make(chan int, 100)</p>
+<div class="highlight"><pre><span></span>log.SetFlags<span class="p">(</span><span class="m">0</span><span class="p">)</span>
+rand.Seed<span class="p">(</span>time.Now<span class="p">()</span><span class="m">.</span>UnixNano<span class="p">())</span>
+
+wgSenders <span class="o">:=</span> sync.WaitGroup<span class="p">{}</span>
+wgReceivers <span class="o">:=</span> sync.WaitGroup<span class="p">{}</span>
+
+<span class="kr">for</span> i <span class="o">:=</span> <span class="m">0</span><span class="p">;</span> i <span class="o">&lt;</span> sendersNum<span class="p">;</span> i<span class="o">++</span> <span class="p">{</span>
+    wgSenders.Add<span class="p">(</span><span class="m">1</span><span class="p">)</span>
+    go func<span class="p">()</span> <span class="p">{</span>
+        defer wgSenders.Done<span class="p">()</span>
+        <span class="kr">for</span> <span class="p">{</span>
+            v <span class="o">:=</span> rand.Intn<span class="p">(</span>maxRandomNum<span class="p">)</span>
+            <span class="kr">if</span> v <span class="o">==</span> <span class="m">0</span> <span class="p">{</span>
+                select <span class="p">{</span>
+                case toDone <span class="o">&lt;-</span> struct<span class="p">{}{}</span><span class="o">:</span>
+                default<span class="o">:</span>
+                <span class="p">}</span>
+                <span class="kr">return</span>
+            <span class="p">}</span>
+            select <span class="p">{</span>
+            case <span class="o">&lt;-</span>done<span class="o">:</span>
+                <span class="kr">return</span>
+            case dataCh <span class="o">&lt;-</span> v<span class="o">:</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">}()</span>
+<span class="p">}</span>
+
+<span class="kr">for</span> i <span class="o">:=</span> <span class="m">0</span><span class="p">;</span> i <span class="o">&lt;</span> receiversNum<span class="p">;</span> i<span class="o">++</span> <span class="p">{</span>
+    wgReceivers.Add<span class="p">(</span><span class="m">1</span><span class="p">)</span>
+    go func<span class="p">()</span> <span class="p">{</span>
+        defer wgReceivers.Done<span class="p">()</span>
+        <span class="kr">for</span> <span class="p">{</span>
+            select <span class="p">{</span>
+            case <span class="o">&lt;-</span>done<span class="o">:</span>
+                <span class="kr">return</span>
+            case v <span class="o">:=</span> <span class="o">&lt;-</span>dataCh<span class="o">:</span>
+                log.Println<span class="p">(</span>v<span class="p">)</span>
+                <span class="kr">if</span> v <span class="o">==</span> maxRandomNum<span class="m">-1</span> <span class="p">{</span>
+                    select <span class="p">{</span>
+                    case toDone <span class="o">&lt;-</span> struct<span class="p">{}{}</span><span class="o">:</span>
+                    default<span class="o">:</span>
+                    <span class="p">}</span>
+                    <span class="kr">return</span>
+                <span class="p">}</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">}()</span>
+<span class="p">}</span>
+
+<span class="o">&lt;-</span>toDone
+<span class="kp">close</span><span class="p">(</span>done<span class="p">)</span>
+wgSenders.Wait<span class="p">()</span>
+wgReceivers.Wait<span class="p">()</span>
+log.Println<span class="p">(</span><span class="s">&quot;done&quot;</span><span class="p">)</span>
+<span class="kp">close</span><span class="p">(</span>dataCh<span class="p">)</span>
+</pre></div>
+
+
+<p>}
+  ```</p>
+<h3>参考</h3>
+<ul>
+<li>http://www.tapirgames.com/blog/golang-channel-closing</li>
+</ul>
+            <aside>
+            <hr/>
+            <nav>
+            <ul class="articles_timeline">
+ 
+                <li class="next_article"><a href="https://niyoh120.github.io/golangnetku-shi-yong-bi-ji.html" title="Next: [golang]net库使用笔记">[golang]net库使用笔记</a> »</li>
+            </ul>
+            </nav>
+            </aside>
+        </div>
+        <section>
+        <div class="span2" style="float:right;font-size:0.9em;">
+ 
+            <h4>Published</h4>
+            <time pubdate="pubdate" datetime="2018-03-11T13:50:26.693465+08:00">Mar 11, 2018</time>
+            <h4>Category</h4>
+            <a class="category-link" href="/categories.html#golang-ref">golang</a> 
+
+        </div>
+        </section>
+</div>
+</article>
+                </div>
+                <div class="span1"></div>
+            </div>
+        </div>
+    </div>
+<footer>
+<div id="footer">
+    <ul class="footer-content">
+        <li class="elegant-power">Powered by <a href="http://getpelican.com/" title="Pelican Home Page">Pelican</a>. Theme: <a href="http://oncrashreboot.com/pelican-elegant" title="Theme Elegant Home Page">Elegant</a> by <a href="http://oncrashreboot.com" title="Talha Mansoor Home Page">Talha Mansoor</a></li>
+    </ul>
+</div>
+</footer>            <script src="http://code.jquery.com/jquery.min.js"></script>
+        <script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/js/bootstrap.min.js"></script>
+        <script>
+            function validateForm(query)
+            {
+                return (query.length > 0);
+            }
+        </script>
+
+    </body>
+</html>
