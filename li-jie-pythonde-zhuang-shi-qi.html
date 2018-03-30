@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en-US">
+    <head>
+        <meta charset="utf-8"> 
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="author" content="niyoh" />
+        <meta name="copyright" content="niyoh" />
+
+<meta name="keywords" content=", python, " />
+        <title>理解Python的装饰器  · niyoh的博客
+</title>
+        <link href="http://cdn-images.mailchimp.com/embedcode/slim-081711.css" rel="stylesheet" type="text/css">
+        <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-combined.min.css" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="https://niyoh120.github.io/theme/css/style.css" media="screen">
+        <link rel="stylesheet" type="text/css" href="https://niyoh120.github.io/theme/css/solarizedlight.css" media="screen">
+        <link rel="shortcut icon" href="https://niyoh120.github.io/theme/images/favicon.ico" type="image/x-icon" />
+        <link rel="apple-touch-icon" href="https://niyoh120.github.io/theme/images/apple-touch-icon.png" />
+        <link rel="apple-touch-icon" sizes="57x57" href="https://niyoh120.github.io/theme/images/apple-touch-icon-57x57.png" />
+        <link rel="apple-touch-icon" sizes="72x72" href="https://niyoh120.github.io/theme/images/apple-touch-icon-72x72.png" />
+        <link rel="apple-touch-icon" sizes="114x114" href="https://niyoh120.github.io/theme/images/apple-touch-icon-114x114.png" />
+        <link rel="apple-touch-icon" sizes="144x144" href="https://niyoh120.github.io/theme/images/apple-touch-icon-144x144.png" />
+        <link rel="icon" href="https://niyoh120.github.io/theme/images/apple-touch-icon-144x144.png" />
+        <link href="https://niyoh120.github.io/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="niyoh的博客 - Full Atom Feed" />
+        <link href="https://niyoh120.github.io/feeds/python.atom.xml" type="application/atom+xml" rel="alternate" title="niyoh的博客 - python Category Atom Feed" />
+    </head>
+    <body>
+        <div id="content-sans-footer">
+        <div class="navbar navbar-static-top">
+            <div class="navbar-inner">
+                <div class="container">
+                    <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </a>
+                    <a class="brand" href="https://niyoh120.github.io/"><span class=site-name>niyoh的博客</span></a>
+                    <div class="nav-collapse collapse">
+                        <ul class="nav pull-right top-menu">
+                            <li ><a href="https://niyoh120.github.io">Home</a></li>
+                            <li ><a href="https://niyoh120.github.io/categories.html">Categories</a></li>
+                            <li ><a href="https://niyoh120.github.io/tags.html">Tags</a></li>
+                            <li ><a href="https://niyoh120.github.io/archives.html">Archives</a></li>
+                            <li><form class="navbar-search" action="https://niyoh120.github.io/search.html" onsubmit="return validateForm(this.elements['q'].value);"> <input type="text" class="search-query" placeholder="Search" name="q" id="tipue_search_input"></form></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container-fluid">
+            <div class="row-fluid">
+                <div class="span1"></div>
+                <div class="span10">
+<article>
+<div class="row-fluid">
+    <header class="page_header span10 offset2">
+    <h1><a href="https://niyoh120.github.io/li-jie-pythonde-zhuang-shi-qi.html"> 理解Python的装饰器  </a></h1>
+    </header>
+</div>
+
+<div class="row-fluid">
+        <div class="span8 offset2 article-content">
+
+            <h1 id="python">理解Python的装饰器</h1>
+<div class="highlight"><pre><span></span><span class="nd">@decorator</span>
+<span class="k">def</span> <span class="nf">foo</span><span class="p">():</span>
+    <span class="k">pass</span>
+</pre></div>
+
+
+<p>实际上等于
+<code>foo=decorator(foo)</code>
+装饰器的返回值应该是一个<code>callable</code>，这样<code>foo</code>才能被调用</p>
+<div class="highlight"><pre><span></span><span class="n">In</span> <span class="p">[</span><span class="mi">11</span><span class="p">]:</span> <span class="k">def</span> <span class="nf">decorator</span><span class="p">(</span><span class="n">func</span><span class="p">):</span>
+    <span class="o">...</span><span class="p">:</span>     <span class="k">def</span> <span class="nf">wrap</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span><span class="o">**</span><span class="n">kw</span><span class="p">):</span>
+    <span class="o">...</span><span class="p">:</span>         <span class="k">print</span><span class="p">(</span><span class="s1">&#39;in decorator&#39;</span><span class="p">)</span>
+    <span class="o">...</span><span class="p">:</span>         <span class="k">return</span> <span class="n">func</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span><span class="o">**</span><span class="n">kw</span><span class="p">)</span>
+    <span class="o">...</span><span class="p">:</span>     <span class="k">return</span> <span class="n">wrap</span>
+    <span class="o">...</span><span class="p">:</span>    
+
+<span class="n">In</span> <span class="p">[</span><span class="mi">12</span><span class="p">]:</span> <span class="nd">@decorator</span>
+    <span class="o">...</span><span class="p">:</span> <span class="k">def</span> <span class="nf">foo</span><span class="p">():</span>
+    <span class="o">...</span><span class="p">:</span>     <span class="k">print</span><span class="p">(</span><span class="s1">&#39;in foo&#39;</span><span class="p">)</span>
+    <span class="o">...</span><span class="p">:</span>     
+
+<span class="n">In</span> <span class="p">[</span><span class="mi">13</span><span class="p">]:</span> <span class="n">foo</span><span class="p">()</span>
+<span class="ow">in</span> <span class="n">decorator</span>
+<span class="ow">in</span> <span class="n">foo</span>
+</pre></div>
+
+
+<p><code>foo=decorator(foo)</code>执行于<code>foo</code>的定义完成时（python中函数定义也是一种语句）</p>
+<p>利用装饰器可以很方便的实现闭包，闭包可以理解为具有上下文的函数</p>
+<div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">print_message</span><span class="p">(</span><span class="n">msg</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">closeure</span><span class="p">(</span><span class="n">func</span><span class="p">):</span>
+        <span class="k">def</span> <span class="nf">wrap</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span><span class="o">**</span><span class="n">kw</span><span class="p">):</span>
+            <span class="k">print</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">func</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span><span class="o">**</span><span class="n">kw</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">wrap</span>
+    <span class="k">return</span> <span class="n">closeure</span>
+
+<span class="nd">@print_message</span><span class="p">(</span><span class="s1">&#39;msg1&#39;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">foo1</span><span class="p">():</span>
+    <span class="k">pass</span>
+
+<span class="nd">@print_message</span><span class="p">(</span><span class="s1">&#39;msg2&#39;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">foo2</span><span class="p">():</span>
+    <span class="k">pass</span>
+
+<span class="n">foo1</span><span class="p">()</span>
+<span class="n">foo2</span><span class="p">()</span>
+
+<span class="o">&gt;&gt;</span> <span class="n">msg1</span>
+<span class="o">&gt;&gt;</span> <span class="n">msg2</span>
+</pre></div>
+
+
+<p>装饰器可以嵌套，注意执行顺序是装饰器的使用顺序</p>
+<div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">print_message</span><span class="p">(</span><span class="n">msg</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">closeure</span><span class="p">(</span><span class="n">func</span><span class="p">):</span>
+        <span class="k">def</span> <span class="nf">wrap</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span><span class="o">**</span><span class="n">kw</span><span class="p">):</span>
+            <span class="k">print</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">func</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span><span class="o">**</span><span class="n">kw</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">wrap</span>
+    <span class="k">return</span> <span class="n">closeure</span>
+
+
+<span class="nd">@print_message</span><span class="p">(</span><span class="s1">&#39;msg1&#39;</span><span class="p">)</span>
+<span class="nd">@print_message</span><span class="p">(</span><span class="s1">&#39;msg2&#39;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">foo1</span><span class="p">():</span>
+    <span class="k">pass</span>
+
+<span class="nd">@print_message</span><span class="p">(</span><span class="s1">&#39;msg2&#39;</span><span class="p">)</span>
+<span class="nd">@print_message</span><span class="p">(</span><span class="s1">&#39;msg1&#39;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">foo2</span><span class="p">():</span>
+    <span class="k">pass</span>
+<span class="n">foo1</span><span class="p">()</span>
+<span class="n">foo2</span><span class="p">()</span>
+
+<span class="o">&gt;&gt;</span> <span class="n">msg1</span>
+<span class="o">&gt;&gt;</span> <span class="n">msg2</span>
+<span class="o">&gt;&gt;</span> <span class="n">msg2</span>
+<span class="o">&gt;&gt;</span> <span class="n">msg1</span>
+</pre></div>
+
+
+<p>因为装饰器实际上是语法糖，所以有一个问题，装饰器返回的函数并不是原本的函数，原本的函数的一些属性（如文档字符串）可能会丢失。</p>
+<p>解决方法是使用<code>functools.wraps</code>，它会将原来函数的属性复制到装饰器返回的函数中。</p>
+<div class="highlight"><pre><span></span><span class="o">&gt;&gt;&gt;</span> <span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">wraps</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="k">def</span> <span class="nf">my_decorator</span><span class="p">(</span><span class="n">f</span><span class="p">):</span>
+<span class="o">...</span>     <span class="nd">@wraps</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+<span class="o">...</span>     <span class="k">def</span> <span class="nf">wrapper</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwds</span><span class="p">):</span>
+<span class="o">...</span>         <span class="k">print</span><span class="p">(</span><span class="s1">&#39;Calling decorated function&#39;</span><span class="p">)</span>
+<span class="o">...</span>         <span class="k">return</span> <span class="n">f</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwds</span><span class="p">)</span>
+<span class="o">...</span>     <span class="k">return</span> <span class="n">wrapper</span>
+<span class="o">...</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="nd">@my_decorator</span>
+<span class="o">...</span> <span class="k">def</span> <span class="nf">example</span><span class="p">():</span>
+<span class="o">...</span>     <span class="s2">&quot;&quot;&quot;Docstring&quot;&quot;&quot;</span>
+<span class="o">...</span>     <span class="k">print</span><span class="p">(</span><span class="s1">&#39;Called example function&#39;</span><span class="p">)</span>
+<span class="o">...</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">example</span><span class="p">()</span>
+<span class="n">Calling</span> <span class="n">decorated</span> <span class="n">function</span>
+<span class="n">Called</span> <span class="n">example</span> <span class="n">function</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">example</span><span class="o">.</span><span class="vm">__name__</span>
+<span class="s1">&#39;example&#39;</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">example</span><span class="o">.</span><span class="vm">__doc__</span>
+<span class="s1">&#39;Docstring&#39;</span>
+</pre></div>
+            <aside>
+            <hr/>
+            <nav>
+            <ul class="articles_timeline">
+ 
+                <li class="previous_article">« <a href="https://niyoh120.github.io/li-jie-pythonde-sheng-cheng-qi.html" title="Previous: 理解Python的生成器">理解Python的生成器</a></li>
+            </ul>
+            </nav>
+            </aside>
+        </div>
+        <section>
+        <div class="span2" style="float:right;font-size:0.9em;">
+ 
+            <h4>Published</h4>
+            <time pubdate="pubdate" datetime="2018-03-31T00:11:54.925811+08:00">Mar 31, 2018</time>
+            <h4>Category</h4>
+            <a class="category-link" href="/categories.html#python-ref">python</a> 
+
+        </div>
+        </section>
+</div>
+</article>
+                </div>
+                <div class="span1"></div>
+            </div>
+        </div>
+    </div>
+<footer>
+<div id="footer">
+    <ul class="footer-content">
+        <li class="elegant-power">Powered by <a href="http://getpelican.com/" title="Pelican Home Page">Pelican</a>. Theme: <a href="http://oncrashreboot.com/pelican-elegant" title="Theme Elegant Home Page">Elegant</a> by <a href="http://oncrashreboot.com" title="Talha Mansoor Home Page">Talha Mansoor</a></li>
+    </ul>
+</div>
+</footer>            <script src="http://code.jquery.com/jquery.min.js"></script>
+        <script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/js/bootstrap.min.js"></script>
+        <script>
+            function validateForm(query)
+            {
+                return (query.length > 0);
+            }
+        </script>
+
+    </body>
+</html>

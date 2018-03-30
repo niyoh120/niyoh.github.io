@@ -6,13 +6,15 @@
         <meta name="author" content="niyoh" />
         <meta name="copyright" content="niyoh" />
 
-<meta name="keywords" content=", test, " />
-        <title>hello  · niyoh的博客
+        <title>Search · niyoh的博客
 </title>
         <link href="http://cdn-images.mailchimp.com/embedcode/slim-081711.css" rel="stylesheet" type="text/css">
         <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-combined.min.css" rel="stylesheet">
         <link rel="stylesheet" type="text/css" href="https://niyoh120.github.io/theme/css/style.css" media="screen">
         <link rel="stylesheet" type="text/css" href="https://niyoh120.github.io/theme/css/solarizedlight.css" media="screen">
+
+<link href="http://fonts.googleapis.com/css?family=Lato:300,400|Open+Sans:300,400" rel="stylesheet" type="text/css">
+<link rel="stylesheet" type="text/css" href="https://niyoh120.github.io/theme/tipuesearch/tipuesearch.css">
         <link rel="shortcut icon" href="https://niyoh120.github.io/theme/images/favicon.ico" type="image/x-icon" />
         <link rel="apple-touch-icon" href="https://niyoh120.github.io/theme/images/apple-touch-icon.png" />
         <link rel="apple-touch-icon" sizes="57x57" href="https://niyoh120.github.io/theme/images/apple-touch-icon-57x57.png" />
@@ -21,9 +23,7 @@
         <link rel="apple-touch-icon" sizes="144x144" href="https://niyoh120.github.io/theme/images/apple-touch-icon-144x144.png" />
         <link rel="icon" href="https://niyoh120.github.io/theme/images/apple-touch-icon-144x144.png" />
         <link href="https://niyoh120.github.io/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="niyoh的博客 - Full Atom Feed" />
-        <link href="https://niyoh120.github.io/feeds/alogrithm.atom.xml" type="application/atom+xml" rel="alternate" title="niyoh的博客 - alogrithm Category Atom Feed" />
-        <link href="https://niyoh120.github.io/feeds/golang.atom.xml" type="application/atom+xml" rel="alternate" title="niyoh的博客 - golang Category Atom Feed" />
-        <link href="https://niyoh120.github.io/feeds/test.atom.xml" type="application/atom+xml" rel="alternate" title="niyoh的博客 - test Category Atom Feed" />
+        <link href="https://niyoh120.github.io/feeds/python.atom.xml" type="application/atom+xml" rel="alternate" title="niyoh的博客 - python Category Atom Feed" />
     </head>
     <body>
         <div id="content-sans-footer">
@@ -53,39 +53,9 @@
                 <div class="span1"></div>
                 <div class="span10">
 <article>
-<div class="row-fluid">
-    <header class="page_header span10 offset2">
-    <h1><a href="https://niyoh120.github.io/hello.html"> hello  </a></h1>
-    </header>
-</div>
-
-<div class="row-fluid">
-        <div class="span8 offset2 article-content">
-
-            <h1>hello world</h1>
-            <aside>
-            <hr/>
-            <nav>
-            <ul class="articles_timeline">
- 
-                <li class="previous_article">« <a href="https://niyoh120.github.io/pai-xu-suan-fa-zong-jie.html" title="Previous: 排序算法总结">排序算法总结</a></li>
- 
-                <li class="next_article"><a href="https://niyoh120.github.io/golangxue-xi-bi-ji.html" title="Next: [golang]学习笔记">[golang]学习笔记</a> »</li>
-            </ul>
-            </nav>
-            </aside>
-        </div>
-        <section>
-        <div class="span2" style="float:right;font-size:0.9em;">
- 
-            <h4>Published</h4>
-            <time pubdate="pubdate" datetime="2018-03-11T16:08:26.042169+08:00">Mar 11, 2018</time>
-            <h4>Category</h4>
-            <a class="category-link" href="/categories.html#test-ref">test</a> 
-
-        </div>
-        </section>
-</div>
+    <div class="span8 offset2">
+        <div id="tipue_search_content"><div id="tipue_search_loading"></div></div>
+    </div>
 </article>
                 </div>
                 <div class="span1"></div>
@@ -98,14 +68,18 @@
         <li class="elegant-power">Powered by <a href="http://getpelican.com/" title="Pelican Home Page">Pelican</a>. Theme: <a href="http://oncrashreboot.com/pelican-elegant" title="Theme Elegant Home Page">Elegant</a> by <a href="http://oncrashreboot.com" title="Talha Mansoor Home Page">Talha Mansoor</a></li>
     </ul>
 </div>
-</footer>            <script src="http://code.jquery.com/jquery.min.js"></script>
-        <script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/js/bootstrap.min.js"></script>
-        <script>
-            function validateForm(query)
-            {
-                return (query.length > 0);
-            }
-        </script>
-
+</footer><script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
+<script type="text/javascript" src="https://niyoh120.github.io/theme/tipuesearch/tipuesearch_set.js"></script>
+<script type="text/javascript" src="https://niyoh120.github.io/theme/tipuesearch/tipuesearch.min.js"></script>
+<script>
+$(document).ready(function() {
+     $('#tipue_search_input').tipuesearch({
+             'mode' : 'json',
+         'show': 10,
+         'newWindow': true,
+             'contentLocation': 'https://niyoh120.github.io/tipuesearch_content.json'
+     });
+});
+</script>
     </body>
 </html>
